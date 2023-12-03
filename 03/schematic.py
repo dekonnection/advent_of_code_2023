@@ -190,6 +190,9 @@ def part2():
                 except KeyError:
                     pass
 
+    logging.info(
+        "Starting last analysis to found out gears with exactly 2 parts connected"
+    )
     result = 0
     for x, x_values in stars.items():
         for y, parts in x_values.items():
