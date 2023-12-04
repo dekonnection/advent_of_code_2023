@@ -21,15 +21,13 @@ def part1():
                 f"Card {game_id}: winning numbers {winning_numbers}, drawn numbers {drawn_numbers}"
             )
 
-            wins = 0
-            for number in drawn_numbers:
-                if number in winning_numbers:
-                    logging.debug(f"Card {1}: number {number} is winning !")
-                    wins += 1
+            wins = len(
+                [number for number in drawn_numbers if number in winning_numbers]
+            )
+            card_points = 0
             if wins:
                 card_points = pow(2, wins - 1)
-            else:
-                card_points = 0
+
             logging.debug(f"Card {1}: {card_points} points")
             pile_points += card_points
 
@@ -57,14 +55,14 @@ def part2():
             logging.debug(
                 f"Card {game_id}: winning numbers {winning_numbers}, drawn numbers {drawn_numbers}"
             )
-            wins = 0
-            for number in drawn_numbers:
-                if number in winning_numbers:
-                    logging.debug(f"Card {1}: number {number} is winning !")
-                    wins += 1
+
+            wins = len(
+                [number for number in drawn_numbers if number in winning_numbers]
+            )
             scratchcards.append({"count": 1, "wins": wins})
+
     for index, card in enumerate(scratchcards):
-        for time in range(0, card["count"]):
+        for _ in range(0, card["count"]):
             for card_to_copy in range(index + 1, index + 1 + card["wins"]):
                 scratchcards[card_to_copy]["count"] += 1
 
