@@ -24,9 +24,8 @@ def scratchcards():
             part2_scratchcards.append({"count": 1, "wins": wins})
 
     for index, card in enumerate(part2_scratchcards):
-        for _ in range(0, card["count"]):
-            for card_to_copy in range(index + 1, index + 1 + card["wins"]):
-                part2_scratchcards[card_to_copy]["count"] += 1
+        for card_to_copy in range(index + 1, index + 1 + card["wins"]):
+            part2_scratchcards[card_to_copy]["count"] += card["count"]
 
     part2_total_cards = sum([card["count"] for card in part2_scratchcards])
 
