@@ -43,7 +43,7 @@ def part2():
 
     # we want the solutions to: (time - x) * x  > record_distance
     # which is equivalent to: -x^2 + time*x - record_distance > 0 (polynomial of degree 2)
-    sqrt_delta = math.sqrt(time * time - 4 * record_distance)
+    sqrt_delta = math.sqrt(time**2 - 4 * record_distance)
     winning_start = math.ceil((-record_distance + sqrt_delta) / -2)
     winning_end = math.ceil((-record_distance - sqrt_delta) / -2)
 
