@@ -17,8 +17,7 @@ def part1():
             hands.append((line[0], int(line[1])))
     logging.debug(f"Cards: {hands}")
 
-    ordered_hands = [[*identify_hand(hand[0]), hand[1]] for hand in hands]
-    ordered_hands.sort()
+    ordered_hands = sorted([[*identify_hand(hand[0]), hand[1]] for hand in hands])
     final_score = sum(
         [(rank + 1) * values[2] for rank, values in enumerate(ordered_hands)]
     )
@@ -27,8 +26,7 @@ def part1():
 
 def identify_hand(raw_hand):
     logging.debug(f"Identifying {raw_hand}")
-    cards_strenghs = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
-    score = 0
+    cards_strengths = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
     counts = collections.Counter(raw_hand).most_common()
     if counts[0][1] == 5:
         score = 6
@@ -52,9 +50,9 @@ def identify_hand(raw_hand):
             # type = "one_pair"
     else:
         score = 0
-    strenghs = [cards_strenghs.index(card) for card in raw_hand]
-    logging.debug(f"{raw_hand}: {score} {strenghs}")
-    return (score, strenghs)
+    strengths = [cards_strengths.index(card) for card in raw_hand]
+    logging.debug(f"{raw_hand}: {score} {strengths}")
+    return (score, strengths)
 
 
 def part2():
@@ -66,8 +64,9 @@ def part2():
             hands.append((line[0], int(line[1])))
     logging.debug(f"Cards: {hands}")
 
-    ordered_hands = [[*identify_hand_with_joker(hand[0]), hand[1]] for hand in hands]
-    ordered_hands.sort()
+    ordered_hands = sorted(
+        [[*identify_hand_with_joker(hand[0]), hand[1]] for hand in hands]
+    )
     final_score = sum(
         [(rank + 1) * values[2] for rank, values in enumerate(ordered_hands)]
     )
@@ -77,8 +76,7 @@ def part2():
 def identify_hand_with_joker(raw_hand):
     logging.debug(f"Identifying {raw_hand}")
     jokerized_hand = joker_treatment(raw_hand)
-    cards_strenghs = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
-    score = 0
+    cards_strengths = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
     counts = collections.Counter(jokerized_hand).most_common()
     if counts[0][1] == 5:
         score = 6
@@ -102,13 +100,13 @@ def identify_hand_with_joker(raw_hand):
             # type = "one_pair"
     else:
         score = 0
-    strenghs = [cards_strenghs.index(card) for card in raw_hand]
-    logging.debug(f"{raw_hand} ({jokerized_hand}): {score} {strenghs}")
-    return (score, strenghs)
+    strengths = [cards_strengths.index(card) for card in raw_hand]
+    logging.debug(f"{raw_hand} ({jokerized_hand}): {score} {strengths}")
+    return (score, strengths)
 
 
 def joker_treatment(hand):
-    cards_strenghs = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
+    cards_strengths = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
     if hand == "JJJJJ":
         logging.debug("Hand is JJJJJ => AAAAA")
         return "AAAAA"
@@ -123,8 +121,8 @@ def joker_treatment(hand):
         ]
         logging.debug(f"Top cards for {hand}: {top_cards}")
         # returns the single most valued card from the previous list
-        top_card = cards_strenghs[
-            max([cards_strenghs.index(card) for card in top_cards])
+        top_card = cards_strengths[
+            max([cards_strengths.index(card) for card in top_cards])
         ]
         logging.debug(f"Most valued top card is {top_card}")
         new_hand = hand.replace("J", top_card)
