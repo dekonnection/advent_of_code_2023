@@ -8,38 +8,34 @@ import collections
 PAYLOAD = sys.argv[1]
 
 
-def part1():
-    values = []
-    with open(PAYLOAD) as f:
-        for _line in f:
-            values.append([int(value) for value in re.findall("[\-0-9]+", _line)])
-
-    return sum([do_stuff(history) for history in values])
+values = []
+with open(PAYLOAD) as f:
+    for _line in f:
+        values.append([int(value) for value in re.findall("[\-0-9]+", _line)])
 
 
-def do_stuff(suite):
+def part1(values):
+    return sum([find_next_number(history) for history in values])
+
+
+def find_next_number(suite):
     derivative = [suite[n + 1] - suite[n] for n in range(len(suite) - 1)]
     if len(list(collections.Counter(derivative))) == 1:
         return suite[-1] + derivative[0]
     else:
-        return suite[-1] + do_stuff(derivative)
+        return suite[-1] + find_next_number(derivative)
 
 
-def part2():
-    values = []
-    with open(PAYLOAD) as f:
-        for _line in f:
-            values.append([int(value) for value in re.findall("[\-0-9]+", _line)])
-
-    return sum([do_stuff_backwards(history) for history in values])
+def part2(values):
+    return sum([find_previous_number(history) for history in values])
 
 
-def do_stuff_backwards(suite):
+def find_previous_number(suite):
     derivative = [suite[n + 1] - suite[n] for n in range(len(suite) - 1)]
     if len(list(collections.Counter(derivative))) == 1:
         return suite[0] - derivative[0]
     else:
-        return suite[0] - do_stuff_backwards(derivative)
+        return suite[0] - find_previous_number(derivative)
 
 
 if __name__ == "__main__":
@@ -50,8 +46,8 @@ if __name__ == "__main__":
         level=logging.getLevelName(log_level),
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
-    part1_result = part1()
-    part2_result = part2()
+    part1_result = part1(values)
+    part2_result = part2(values)
 
     print(f"Result for part 1: {part1_result}")
     print(f"Result for part 2: {part2_result}")
