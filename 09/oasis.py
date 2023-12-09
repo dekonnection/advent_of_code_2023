@@ -19,8 +19,7 @@ def part1():
 
 def do_stuff(suite):
     derivative = [suite[n + 1] - suite[n] for n in range(len(suite) - 1)]
-    unique_elements = list(collections.Counter(derivative))
-    if len(unique_elements) == 1:
+    if len(list(collections.Counter(derivative))) == 1:
         return suite[-1] + derivative[0]
     else:
         return suite[-1] + do_stuff(derivative)
@@ -37,8 +36,7 @@ def part2():
 
 def do_stuff_backwards(suite):
     derivative = [suite[n + 1] - suite[n] for n in range(len(suite) - 1)]
-    unique_elements = list(collections.Counter(derivative))
-    if len(unique_elements) == 1:
+    if len(list(collections.Counter(derivative))) == 1:
         return suite[0] - derivative[0]
     else:
         return suite[0] - do_stuff_backwards(derivative)
